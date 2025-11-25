@@ -1,5 +1,13 @@
 # Clasio - Document Consciousness™
 
+[![License](https://img.shields.io/badge/license-Proprietary-red.svg)](LICENSE)
+[![Version](https://img.shields.io/badge/version-4.3.1-blue.svg)](CHANGELOG.md)
+[![Status](https://img.shields.io/badge/status-Public%20Beta-green.svg)](https://clasio.ai)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)](https://reactjs.org/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-4169E1?logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![Google Cloud](https://img.shields.io/badge/Google%20Cloud-Platform-4285F4?logo=google-cloud&logoColor=white)](https://cloud.google.com/)
+
 > Making documents intelligent. Not just searchable, but conscious.
 
 **Website**: [clasio.ai](https://clasio.ai)
