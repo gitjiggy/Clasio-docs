@@ -211,23 +211,19 @@ Pre-built compliance templates (tax filing, mortgage application, visa applicati
 
 ### Objective comparison based on November 2025 research and direct testing
 
-| **Capability** | **Google Drive + Gemini Deep Research** | **Dropbox Dash** | **Notion AI** | **ChatGPT Plus** | **mem.ai** | **poly.app** | **Perplexity Spaces** | **Clasio** |
-|---|---|---|---|---|---|---|---|---|
-| **Primary Use Case** | Workspace integration | Universal app search | Workspace notes | Conversational AI | Personal notes | Local file browser | Research | **Document intelligence** |
-| **Response Time** | 2-4s (RAG) | 1-3s | 3-5s (RAG) | 3-5s (RAG) | 2-3s | 1-2s | 2-4s (RAG) | **80ms** |
-| **Cost Per Query** <br><sub>After upload</sub> | Varies (LLM cost) | Included in plan | ~$0.01 | ~$0.02 | Included | Unknown | ~$0.01 | **$0.00** |
-| **Answer Format** | Synthesized response | Search results | Chat response | Conversational | Note summaries | Citations | Research report | **Direct answer + source** |
-| **Proactive Alerts** <br><sub>Deadline tracking</sub> | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ |
-| **Voice Search** | Via Google Assistant | ❌ | ❌ | Via mobile app | ❌ | ❌ | ❌ | ✅ Built-in |
-| **Auto-Organization** | Manual folders | Search-based | Templates/databases | ❌ | Auto-linking | ❌ | ❌ | **Affinity detection** |
-| **File Limits** | Unlimited (15GB free) | Unlimited | Unlimited | 20 files/conversation | Unlimited | Unlimited | 50-5000/space | 200 (beta) |
-| **File Size Limit** | 5TB | Varies by plan | 5GB | Varies | Unknown | Unknown | 50MB | 15MB (beta) |
-| **Session Memory** | Persistent | Persistent | Persistent | **Session-bound** | Persistent | Persistent | 7-day threads | Persistent |
-| **Data Training** <br><sub>AI model training</sub> | ⚠️ Yes (opt-out) | Unclear | Workspace only | ⚠️ Yes (opt-out) | Unknown | Unknown | Unclear | ✅ **NEVER** |
-| **Mobile Access** | Full (native apps) | Full | Full (native apps) | Full (native apps) | PWA only | macOS only | Full | PWA (full features) |
-| **Pricing** | Free-$20/mo | Business plan req. | $20/user/mo (Business+) | Free-$20/mo | $12/mo Pro | Free (100GB) | Free-$20/mo | **Free (beta)** |
-| **Architecture** | RAG (per-query) | Hybrid search + RAG | RAG (per-query) | RAG (per-query) | Knowledge graph | Proprietary embeddings | Web RAG | **Consciousness (extract once)** |
-| **Best For** | Gmail/Drive power users | Teams using many tools | Notion workspace users | Conversational queries | Note-taking | Local media files | Web research | **Document management** |
+*Platform order optimized for mobile viewing - Clasio shown first*
+
+| **Capability** | **Clasio** | **Google Drive + Gemini** | **Dropbox Dash** | **mem.ai** | **poly.app** | **Notion AI** | **ChatGPT** |
+|---|---|---|---|---|---|---|---|
+| **Primary Use Case** | **Document intelligence** | Workspace integration | Universal app search | Personal notes | Local file browser | Note-taking with AI | General AI chat |
+| **Query Architecture** | **Pre-extraction (query structured data)** | RAG (re-process each query) | RAG with reranking | Smart search + context | Proprietary embedding | RAG (on-demand) | RAG (re-process each query) |
+| **Answer Consistency** | **Idempotent (same query = same result)** | Variable (RAG variability) | Mostly consistent | Context-dependent | Generally consistent | Variable (model dependent) | Variable (RAG variability) |
+| **Direct Answer Precision** | **Exact field extraction (EIN, policy #, etc.)** | Summaries with citations | Search results + snippets | Contextual answers | Citations with timestamps | AI-generated summaries | Conversational responses |
+| **Cross-Document Aggregation** | **Native (e.g., "$2,847 across 11 receipts")** | Limited (manual) | Search across, no aggregation | Related notes linking | ❌ Not primary focus | ❌ Limited to context | Limited to conversation |
+| **Voice Search** | **✅ Built-in web interface** | ⚠️ Via Google Assistant | ❌ | ❌ | ❌ | ❌ | ✅ Mobile app |
+| **Proactive Intelligence** | **✅ "What Needs Attention" alerts** | ❌ Reactive only | ❌ Search-based | ❌ No proactive features | ❌ Manual discovery | ❌ Query-based only | ❌ Chat-based only |
+| **Auto-Organization Method** | **Affinity detection (temporal + semantic)** | Manual folders | Search-based discovery | Auto-linking (knowledge graph) | ❌ Local file system | Manual organization | ❌ No file organization |
+| **Data Training** | **✅ NEVER trains on your data** | ⚠️ Yes (opt-out available) | Unclear policy | Unknown | Third-party AI concerns | ⚠️ Uses AI providers | ⚠️ Yes (opt-out for some tiers) |
 
 **Legend**:
 - ✅ = Yes, fully supported
@@ -296,20 +292,20 @@ Pre-built compliance templates (tax filing, mortgage application, visa applicati
 
 ---
 
-#### ChatGPT Plus
+#### ChatGPT
 
 **Strengths**:
 - Excellent at synthesis and conversational queries
-- Deep Research feature for multi-source analysis
 - Widely used and familiar interface
 - Strong at explanations and creative tasks
+- Voice interface available on mobile app
 
 **Limitations**:
-- 20 file limit per conversation
-- Session-bound memory (files lost when chat ends)
-- Trains on uploads unless explicitly opted out
-- Keyword-based retrieval, not semantic vector search
-- Free tier limited to 3 files per day
+- RAG-based processing (slower responses)
+- Session-bound memory for uploaded documents
+- Trains on uploads unless explicitly opted out (varies by tier)
+- Limited cross-document aggregation (conversation scope only)
+- No file organization or management features
 
 **Best For**: Users who want conversational AI assistance and synthesis, not dedicated document management.
 
@@ -348,24 +344,6 @@ Pre-built compliance templates (tax filing, mortgage application, visa applicati
 - Requires local file storage
 
 **Best For**: macOS users with large local media collections who need advanced search with precise citations.
-
----
-
-#### Perplexity Spaces
-
-**Strengths**:
-- Web search integration for research
-- Strong research capabilities
-- Up to 5,000 files per Space (Enterprise Max)
-- Good for academic and professional research
-
-**Limitations**:
-- File upload limits vary by plan (50-5000)
-- Thread files expire after 7 days
-- 50MB file size limit
-- Video analysis limited to transcripts
-
-**Best For**: Researchers and professionals who need web-integrated document research capabilities.
 
 ---
 
