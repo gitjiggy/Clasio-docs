@@ -3,6 +3,7 @@
 [![License](https://img.shields.io/badge/license-Proprietary-red.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-4.3.1-blue.svg)](CHANGELOG.md)
 [![Status](https://img.shields.io/badge/status-Public%20Beta-green.svg)](https://clasio.ai)
+![Repo Views](https://komarev.com/ghpvc/?username=gitjiggy&repo=Clasio-docs&label=Repo%20Views&color=0e75b6&style=flat)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)](https://reactjs.org/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-4169E1?logo=postgresql&logoColor=white)](https://www.postgresql.org/)
