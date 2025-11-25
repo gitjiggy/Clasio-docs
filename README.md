@@ -1,7 +1,7 @@
 # Clasio - Document Consciousness™
 
 [![License](https://img.shields.io/badge/license-Proprietary-red.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-4.3.1-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-4.3.2-blue.svg)](CHANGELOG.md)
 [![Status](https://img.shields.io/badge/status-Public%20Beta-green.svg)](https://clasio.ai)
 ![Repo Views](https://komarev.com/ghpvc/?username=gitjiggy&repo=Clasio-docs&label=Repo%20Views&color=0e75b6&style=flat)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
@@ -12,6 +12,7 @@
 > Making documents intelligent. Not just searchable, but conscious.
 
 **Website**: [clasio.ai](https://clasio.ai)
+**Public Docs**: [clasio.ai/docs](https://clasio.ai/docs) - Live technical documentation
 **Status**: Public Beta (Free during beta)
 **Stack**: TypeScript, React, PostgreSQL, Google Cloud
 
