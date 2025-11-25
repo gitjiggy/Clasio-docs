@@ -315,22 +315,6 @@ POST /api/search
 
 ---
 
-## Competitive Differentiation
-
-| Feature | Google Drive | Dropbox | Notion AI | ChatGPT | Clasio |
-|---------|-------------|---------|-----------|---------|--------|
-| **Keyword Search** | ✅ | ✅ | ✅ | ✅ | ✅ |
-| **Semantic Search** | ❌ | ❌ | ⚠️ (RAG) | ⚠️ (RAG) | ✅ (Native) |
-| **Natural Language Q&A** | ❌ | ❌ | ⚠️ (Slow) | ⚠️ (Slow) | ✅ (Fast) |
-| **Direct Answers** | ❌ | ❌ | ❌ | ❌ | ✅ |
-| **Auto-Organization** | ❌ | ❌ | ❌ | ❌ | ✅ |
-| **Query Speed** | N/A | N/A | 3-5s | 3-5s | 80ms |
-| **Query Cost** | N/A | N/A | $0.02 | $0.02 | $0.00 |
-| **Accuracy** | N/A | N/A | 85-90% | 85-90% | 100% |
-| **Product vs Infrastructure** | Product | Product | Product | Chat | Product |
-
----
-
 ## Roadmap
 
 ### ✅ Completed (V4.3.1 - Current)
