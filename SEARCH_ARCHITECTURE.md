@@ -1,6 +1,8 @@
 # Clasio Search Architecture - "Answers First"™
 
-**Version**: 4.3.1 (November 2025)
+**Version**: 5.0 (March 2026)
+
+> **Note (March 2026):** This document was updated to reflect the March 2026 search overhaul. The 6-tier sequential waterfall was replaced by parallel keyword + semantic search, and Ask Clasio was added for deep document Q&A. For the full technical reference, see `docs/search/ARCHITECTURE_CURRENT.md` in the main repository.
 
 > This document describes Clasio's consciousness-first search architecture at a conceptual level.
 
@@ -9,7 +11,7 @@
 ## Table of Contents
 1. [Vision & Philosophy](#vision--philosophy)
 2. [Architecture Overview](#architecture-overview)
-3. [6-Tier Consciousness-First Waterfall](#6-tier-consciousness-first-waterfall)
+3. [Parallel Search + Ask Clasio](#parallel-search--ask-clasio)
 4. [Intent-Based Routing](#intent-based-routing)
 5. [Document Consciousness Framework](#document-consciousness-framework)
 6. [Performance & Optimization](#performance--optimization)
@@ -45,69 +47,88 @@ Users should get **direct answers** to questions, not lists of documents to sear
 
 ## Architecture Overview
 
-### Multi-Layer Intelligence Stack
+### Two-Phase Search Stack
 
 ```
 ┌──────────────────────────────────────┐
-│   QUESTION ANALYZER                  │
-│   - Intent detection                 │
-│   - Entity extraction                │
+│   QUERY PREPROCESSING                │
+│   - Conversational pattern stripping │
+│   - Possessive detection             │
+│   - Gemini preprocessor (on retry)   │
 │   - Dimension classification         │
-│   - Confidence scoring               │
 └──────────────────────────────────────┘
               ↓
 ┌──────────────────────────────────────┐
-│   UNIVERSAL CONSCIOUSNESS SEARCH     │
-│   - Single 6-tier waterfall          │
-│   - AI-extracted metadata priority   │
-│   - Pre-searches once per query      │
-│   - Passes results to resolvers      │
+│   PHASE 1: PARALLEL SEARCH           │
+│                                      │
+│   ┌──────────┐  ┌──────────────┐    │
+│   │ Keyword  │  │ Semantic     │    │
+│   │ (11 SQL  │  │ (pgvector    │    │
+│   │  fields) │  │  cosine)     │    │
+│   └────┬─────┘  └──────┬──────┘    │
+│        └──────┬─────────┘           │
+│        Dynamic Merge + Score         │
 └──────────────────────────────────────┘
               ↓
 ┌──────────────────────────────────────┐
 │   INTENT-BASED ROUTING               │
 │   - 10 specialized resolvers         │
-│   - Pattern matching                 │
-│   - Priority-based selection         │
-│   - Intelligent extraction           │
+│   - Resolver hint fast-path          │
+│   - Dimension pre-filter             │
+│   - Pattern matching fallback        │
 └──────────────────────────────────────┘
               ↓
 ┌──────────────────────────────────────┐
-│   BUSINESS LOGIC SERVICES            │
-│   - Aggregation                      │
-│   - Quantitative calculations        │
-│   - Relationship mapping             │
-│   - Temporal analysis                │
+│   CONSCIOUSNESS EXTRACTION CASCADE   │
+│   - Structured attribute extraction  │
+│   - Key Q&A matching (lexical+sem.)  │
+│   - Instant answer matching          │
+│   - Content snippet extraction       │
+│   (All from pre-computed data, 0 API │
+│    calls)                            │
+└──────────────────────────────────────┘
+              ↓
+┌──────────────────────────────────────┐
+│   PHASE 2: ASK CLASIO (conditional) │
+│   - Fires when confidence < 50%     │
+│   - Sends doc content to Gemini     │
+│   - Verified answer replaces weak   │
+│     consciousness answer             │
 └──────────────────────────────────────┘
               ↓
 ┌──────────────────────────────────────┐
 │   DATA PERSISTENCE LAYER             │
 │   - PostgreSQL + pgvector            │
-│   - Optimized indexing               │
-│   - Caching strategy                 │
-│   - Query optimization               │
+│   - 7 denormalized search fields     │
+│   - HNSW indexes for vectors         │
+│   - B-tree + GIN for keywords        │
 └──────────────────────────────────────┘
 ```
 
 ### Key Components
 
-**Question Analyzer**
-- Detects query intent (WHAT/WHO/WHEN/WHERE/WHY/HOW/HOW_MUCH)
-- Extracts entities using pattern matching
-- Classifies dimension with confidence scoring
-- Meta-query extraction for complex questions
+**Parallel Search Service**
+- Runs keyword and semantic search simultaneously
+- Dynamic weighting based on match strength (strong keyword matches suppress semantic path)
+- Trigram fallback for typos when keyword search returns nothing
+- Max-based scoring per field (prevents weak matches from outscoring strong ones)
 
-**Universal Consciousness Search**
-- Single source of truth for document search
-- Executes 6-tier waterfall once per query
-- Returns documents with confidence scores
-- Eliminates redundant database queries
+**Consciousness Extraction Cascade**
+- Extracts direct answers from pre-computed 6D metadata without any API calls
+- Tries structured attributes first, then key Q&A, then instant answers, then content snippets
+- Confidence thresholds gate each extraction method
+
+**Ask Clasio**
+- Progressive enhancement on the frontend; fires only when consciousness answers are weak
+- Sends document content directly to Gemini (temperature 0 for deterministic output)
+- Also available as "Ask This Document" inside the document detail modal
+- Supports cross-document queries via document hints
 
 **Resolver Registry**
 - Central routing system for query types
-- Priority-based resolver selection
-- Domain-aware pattern matching
-- Specialized processing pipelines
+- Priority-based resolver selection with hint fast-path
+- Dimension pre-filter skips mismatched resolvers
+- 10 specialized resolvers from aggregation to compliance
 
 **Data Gateway**
 - Abstraction over persistence layer
@@ -117,93 +138,38 @@ Users should get **direct answers** to questions, not lists of documents to sear
 
 ---
 
-## 6-Tier Consciousness-First Waterfall
+## Parallel Search + Ask Clasio
 
-Our search strategy prioritizes AI-extracted metadata (document consciousness) over raw keyword matching.
+Search runs in two phases. Phase one (parallel search) finds documents and extracts answers from pre-computed consciousness data. Phase two (Ask Clasio) fires conditionally when phase one's answer is weak, sending document content directly to Gemini for a verified answer.
 
-### What is Document Consciousness?
+### Phase 1: Parallel Search
 
-A 6-dimensional AI-extracted metadata structure capturing document intelligence:
+Keyword and semantic search run simultaneously against consciousness metadata and embeddings.
 
-```typescript
-Document Consciousness {
-  identity: {
-    docType: "Invoice" | "Resume" | "Tax Form 1040"
-    docTitle: AI-extracted title
-  }
+**Keyword search** tests the query against 11 fields (consciousness identity fields, 7 denormalized search columns, filenames) using ILIKE and PostgreSQL word boundary regex. Scoring is max-based: each document gets the score of its single best matching field, which prevents documents with many weak matches from outranking one strong match.
 
-  extraction: {
-    structuredFields: [
-      { label: "EIN", value: "12-3456789", fieldType: "identifier" }
-      { label: "Due Date", value: "2024-04-15", fieldType: "date" }
-    ]
+**Semantic search** generates a query embedding and runs pgvector cosine similarity against `summaryEmbeddingV` (768-dim). It is skipped entirely when the top keyword hit scores above 0.8, since a strong keyword match means the right document is already found. A 3-second timeout prevents slow embedding calls from blocking results.
 
-    temporalData: [
-      {
-        rawDate: "04/15/2024"
-        normalizedDate: "2024-04-15"
-        dateType: "deadline"
-        actionRequired: true
-      }
-    ]
+**Dynamic merge scoring** combines the two result sets. When keyword matches are strong (normalized score >= 0.50), keyword gets 55% weight and semantic gets 25%. When keyword matches are weak, the weights flip. An exact-match boost of 0.10 is added when the match comes from consciousness identity fields (docType, docTitle).
 
-    monetaryValues: [
-      {
-        rawValue: "$1,234.56"
-        normalizedAmount: 1234.56
-        currency: "USD"
-      }
-    ]
+**Trigram fallback**: When keyword search returns zero results, `pg_trgm similarity()` provides fuzzy matching for typos and near-misses.
 
-    actionableInsights: [
-      {
-        insight: "Payment due in 7 days"
-        category: "action"
-        relevance: "Time-sensitive financial obligation"
-      }
-    ]
-  }
-}
-```
+### Phase 2: Ask Clasio
 
-### The 6 Tiers (Progressively Broader)
+When the consciousness extraction cascade produces a low-confidence answer (below 50%) on a question query, the frontend automatically fires Ask Clasio. This sends the top document's content (plus up to 4 related documents identified by hints) directly to Gemini at temperature 0.
 
-**Tier 1: Consciousness Exact Match** 
-- Precise semantic search in AI-extracted structured data
-- Word boundary matching on consciousness fields
-- Highest confidence due to structured data accuracy
+If the Gemini answer has confidence above 50%, it replaces the weak consciousness answer in the UI with a "Verified Answer" badge. If it fails, the original consciousness answer remains.
 
-**Tier 2: Domain-Expanded Multi-Field Search** 
-- Leverages domain knowledge (1,128 curated terms)
-- Weighted scoring across multiple consciousness fields
-- Differential field weighting (critical fields weighted higher)
-- Primary query terms: full weight | Expansion terms: reduced weight
+Ask Clasio is also available as "Ask This Document" inside the document detail modal for user-initiated questions.
 
-**Tier 3: Exact Filename Match** 
-- Traditional exact filename matching
-- Fast index-based lookups
-- Useful when users remember file names
+### Consciousness Extraction Cascade
 
-**Tier 4: Consciousness Fuzzy Match** 
-- Partial/fuzzy matching in consciousness data
-- Handles typos and variations
-- Lower confidence due to broader matching
+Before Ask Clasio fires (or instead of it, when consciousness confidence is sufficient), direct answers are extracted from pre-computed 6D metadata with zero API calls:
 
-**Tier 5: Vector Semantic Search** 
-- Pgvector cosine similarity on document embeddings
-- Conceptual matching ("medical coverage" finds "health insurance")
-- Semantic understanding without exact keywords
-
-**Tier 6: Filename Fuzzy Fallback** 
-- Last-resort fuzzy filename matching
-- Lowest confidence tier
-- Catches edge cases when all else fails
-
-### Why This Ordering Matters
-
-Higher tiers = more precise understanding = higher confidence
-
-The system tries precise understanding first (structured AI data) before falling back to fuzzy matching. This ensures users get the most accurate answers first.
+1. **Structured attribute extraction**: For identifier, date, or monetary queries, searches consciousness structured fields.
+2. **Key Q&A matching**: Searches pre-computed question/answer pairs. Tries lexical matching first (50% term overlap), falls back to semantic similarity (0.75 threshold).
+3. **Instant answer matching**: Same approach against instant answer fields.
+4. **Content snippet extraction**: Regex search against document content, extracting a 120-character window around the match.
 
 ---
 
@@ -409,13 +375,15 @@ Confidence scores map to user-facing tiers:
 
 ## Evolution & Roadmap
 
-### Current State (V4.3.1)
-- 6-tier consciousness-first search
-- 10 specialized resolvers with intent routing
+### Current State (V5.0)
+- Parallel keyword + semantic search with dynamic merge scoring
+- Ask Clasio for deep document Q&A (progressive enhancement)
+- Consciousness extraction cascade (structured attributes, key Q&A, instant answers, snippets)
+- 10 specialized resolvers with hint fast-path, dimension pre-filter, and pattern matching
+- Gemini query preprocessor for typo correction and intent classification (on retry)
 - Universal field extraction (no type constraints)
 - Search idempotency (deterministic results)
-- Domain knowledge system (1,128 terms)
-- Denormalized search optimization
+- 50 golden query test suite with quality grading
 
 ### Future Enhancements
 - Enhanced proactive intelligence
@@ -433,4 +401,4 @@ For a deeper technical dive, see our **[README](./README.md)** or visit **[clasi
 
 ---
 
-**© 2025 Clasio. All rights reserved.**
+**© 2025-2026 Clasio. All rights reserved.**

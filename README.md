@@ -47,9 +47,9 @@ You spend 12 hours per week on document chaos:
 
 **Clasio** (Document Consciousness):
 - Extract intelligence once, query forever
-- 80ms response times
-- $0.00 per query
-- 100% accuracy on extracted data
+- Answers from inside your documents, insights across them
+- $0.00 per consciousness query; Ask Clasio deep answers at ~$0.008 each
+- 100% accuracy on extracted data, verified Gemini answers when consciousness falls short
 
 ---
 
@@ -87,7 +87,10 @@ No rigid schemas. Extract ANY labeled field from ANY document type:
 - EINs, SSNs, account numbers
 - Future-proof for documents we've never seen
 
-### 5. Domain-Aware Search
+### 5. Ask Clasio (Deep Document Q&A)
+When consciousness extraction alone can't produce a confident answer, Ask Clasio sends document content directly to Gemini for a verified answer. It fires automatically as progressive enhancement in search results, and is also available as "Ask This Document" inside any document's detail view. Supports cross-document queries (e.g. "compare 2024 vs 2023 taxes") by including content from multiple related documents in a single Gemini call.
+
+### 6. Domain-Aware Search
 Understands document categories:
 - Tax forms (1040, 1099, W-2, Schedule A)
 - Medical records (prescriptions, lab results, imaging)
@@ -96,7 +99,7 @@ Understands document categories:
 - Real estate (deeds, mortgages, titles)
 - Travel documents (passports, visas, I-94s)
 
-### 6. Proactive Intelligence (Coming Soon)
+### 7. Proactive Intelligence (Coming Soon)
 Documents that tell you what matters:
 - "Your lease auto-renews in 30 days"
 - "You've almost met your insurance deductible"
@@ -154,45 +157,30 @@ Documents that tell you what matters:
 
 ## Search Architecture
 
-### 6-Tier Consciousness-First Waterfall
+### Parallel Search + Ask Clasio
 
-Documents are searched across 6 progressively broader tiers, each with measured confidence:
+Search runs in two phases. Phase one (parallel search) finds documents and extracts answers from pre-computed consciousness data with zero API calls. Phase two (Ask Clasio) fires only when the consciousness answer is weak, sending document content to Gemini for a verified answer.
 
-**Tier 1: Consciousness Exact Match** 
-- Precise semantic search in AI-extracted metadata
-- PostgreSQL word boundary regex on structured intelligence
-- Example: "W-2" → matches `docType: "Tax Form W-2"`
+**Parallel keyword + semantic search:**
+- Keyword search tests the query against 11 fields (consciousness identity, denormalized search columns, filenames) with max-based scoring.
+- Semantic search runs pgvector cosine similarity on 768-dim embeddings concurrently. Skipped when keyword matches are strong.
+- Results merge with dynamic weighting based on match strength.
+- Trigram fallback catches typos when keyword search returns nothing.
 
-**Tier 2: Domain-Expanded Multi-Field Search** 
-- Leverages domain knowledge (1,128 terms) to expand queries
-- Weighted multi-field scoring across 7 indexed columns
-- Differential weighting (docType: 1.0 → filename: 0.3)
-- Example: "passport" → searches travel document terminology
+**Consciousness extraction cascade:**
+Direct answers come from pre-computed 6D metadata (structured attributes, key Q&A pairs, instant answers, content snippets) without any API calls.
 
-**Tier 3: Exact Filename Match** 
-- Traditional exact filename matching
-- Fast B-tree index lookups
-
-**Tier 4: Consciousness Fuzzy Match** 
-- Partial matching in consciousness data
-- Handles typos and variations
-
-**Tier 5: Vector Semantic Search** 
-- Pgvector cosine similarity
-- Conceptual matching ("medical coverage" finds "health insurance")
-
-**Tier 6: Filename Fuzzy Fallback** 
-- Last-resort fuzzy filename matching
-- Catches edge cases
+**Ask Clasio (progressive enhancement):**
+When consciousness confidence falls below 50% on a question query, the frontend fires Ask Clasio in the background. It sends document content to Gemini at temperature 0 and replaces the weak answer with a verified one on success.
 
 ### Intent-Based Routing
 
-Different query types route to specialized processors:
+Different query types route to specialized resolvers via hint fast-path, dimension pre-filter, or pattern matching:
 - **Timeline queries** → Date extraction optimization
-- **Quantitative queries** → Monetary aggregation
-- **Relationship queries** → Entity-focused search
+- **Quantitative queries** → Monetary aggregation (exhaustive 100-doc search)
+- **Relationship queries** → Entity and stakeholder search
 - **Identifier queries** → Precision extraction from structured data
-- **Document finder** → Multi-tier consciousness search
+- **Document finder** → Catch-all fallback with direct Q&A lookup
 
 ### Search Idempotency
 
@@ -271,19 +259,25 @@ Populate denormalized search fields (7 indexed columns)
 Store in database (structured, searchable JSON)
 ```
 
-### 2. Query (80 milliseconds)
+### 2. Query (Two Phases)
 ```
 User asks question
     ↓
-Intent detection (what type of query?)
+Phase 1: Parallel Search
+    Keyword (11 SQL fields) + Semantic (pgvector) run simultaneously
     ↓
-6-tier consciousness search (prioritizes AI-extracted metadata)
+    Dynamic merge scoring → top 10 enriched documents
     ↓
-Route to specialized resolver (Timeline, Quantitative, Relationship, etc.)
+    Resolver routing → consciousness extraction cascade
     ↓
-Generate direct answer with confidence + source
+    Return answer + documents to frontend
+
+Phase 2: Ask Clasio (conditional)
+    IF consciousness confidence < 50% AND query is a question:
     ↓
-Return to user (<100ms)
+    Send top document content to Gemini (temperature 0)
+    ↓
+    Replace weak answer with verified "Ask Clasio" answer
 ```
 
 ---
@@ -318,12 +312,14 @@ POST /api/search
 
 ## Roadmap
 
-### ✅ Completed (V4.3.1 - Current)
-- 6-tier consciousness-first search
-- Intent-based routing with 10 specialized resolvers
+### Completed (V5.0, Current)
+- Parallel keyword + semantic search with dynamic merge scoring
+- Ask Clasio for deep document Q&A (progressive enhancement + "Ask This Document")
+- Consciousness extraction cascade (structured attributes, key Q&A, instant answers, snippets)
+- Gemini query preprocessor for typo correction and intent classification
+- Intent-based routing with 10 specialized resolvers (hint fast-path, dimension pre-filter)
 - Universal field extraction (no type constraints)
-- Domain knowledge system (1,128 terms)
-- Search idempotency (deterministic results)
+- 50 golden query test suite with quality grading
 - Denormalized search optimization (7 indexed fields)
 - Multi-tenant security architecture
 - Auto-organization via affinity detection
@@ -359,7 +355,7 @@ Contact: support@clasio.ai
 ## License
 
 **Proprietary Software**
-© 2025 Clasio. All rights reserved.
+© 2025-2026 Clasio. All rights reserved.
 
 ---
 
