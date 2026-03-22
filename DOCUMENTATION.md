@@ -393,12 +393,11 @@ Clasio uses a fundamentally different architecture than traditional RAG systems.
 - **Performance optimizations**: Parallel keyword+semantic search, denormalized fields, connection pooling, multi-layer caching
 
 **Cost Model**:
-- Upload: ~$0.004 per document (AI extraction + embeddings)
+- Upload: One-time AI extraction per document
 - Consciousness queries: Near-zero (database lookup, no LLM calls)
-- Ask Clasio deep queries: ~$0.008 (Gemini call, ~20% of queries)
-- Storage: ~$0.023/GB/month (Google Cloud Storage)
+- Ask Clasio deep queries: Minimal (only fires when consciousness can't answer)
 
-**Why This Matters**: Traditional RAG systems re-process documents on every query (~$0.02 per query). Clasio's consciousness queries cost near-zero. Ask Clasio deep queries cost $0.008, still 60% cheaper than RAG, and only fire when consciousness can't answer.
+**Why This Matters**: Traditional RAG systems re-process documents on every query, adding latency and cost each time. Clasio extracts intelligence once at upload, then consciousness queries run instantly from pre-extracted data. Ask Clasio deep queries only fire when needed, keeping costs low.
 
 [**READ FULL TECHNICAL ARCHITECTURE →**](./README.md)
 
@@ -414,14 +413,14 @@ Most document AI systems use RAG (Retrieval-Augmented Generation), which means e
 3. Send documents + query to LLM (1000-3000ms)
 4. LLM generates answer (1000-2000ms)
 
-**Total: 3-5 seconds + $0.01-0.02 cost per query**
+**Total: 3-5 seconds per query, every time**
 
 Clasio's two-phase approach:
 1. Parallel keyword + semantic search across pre-extracted consciousness data (sub-second)
 2. Consciousness extraction cascade returns structured answers instantly
 3. If consciousness can't answer, Ask Clasio reads document content via Gemini (1-3 seconds)
 
-**Phase 1: Sub-second, near-zero cost. Phase 2: 1-3 seconds, ~$0.008 (only when needed)**
+**Phase 1: Sub-second. Phase 2: 1-3 seconds (only when consciousness can't answer)**
 
 **Key Components**:
 - **Parallel search**: Keyword and semantic search run simultaneously with dynamic scoring

@@ -92,7 +92,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Performance
 - Sub-second document discovery via parallel keyword and semantic search
-- Ask Clasio deep answers verified against document content (~$0.008 per deep query)
+- Ask Clasio deep answers verified against document content
 - Near-zero cost for consciousness-based queries (pre-extracted data)
 - 50x payload reduction with lightweight projections
 

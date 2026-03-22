@@ -40,15 +40,15 @@ You spend 12 hours per week on document chaos:
 - Static files (passive artifacts)
 
 **RAG systems** (ChatGPT, Notion AI):
-- Re-process documents on every query (slow, expensive)
+- Re-process documents on every query (slow)
 - 3-5 second response times
-- $0.02 per query cost
+- Cost per query adds up at scale
 - 85-90% accuracy (hallucination risk)
 
 **Clasio** (Document Consciousness):
 - Extract intelligence once, query forever
 - Answers from inside your documents, insights across them
-- $0.00 per consciousness query; Ask Clasio deep answers at ~$0.008 each
+- Sub-second document discovery, deep answers in seconds
 - 100% accuracy on extracted data, verified Gemini answers when consciousness falls short
 
 ---
