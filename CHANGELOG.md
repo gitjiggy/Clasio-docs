@@ -91,8 +91,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Refactored consciousness extraction pipeline
 
 ### Performance
-- Query response time: 80ms average (down from 3-5 seconds)
-- Query cost: $0.00 (down from $0.02 per query)
+- Sub-second document discovery via parallel keyword and semantic search
+- Ask Clasio deep answers verified against document content (~$0.008 per deep query)
+- Near-zero cost for consciousness-based queries (pre-extracted data)
 - 50x payload reduction with lightweight projections
 
 ---

@@ -350,9 +350,9 @@ Pre-built compliance templates (tax filing, mortgage application, visa applicati
 #### Clasio
 
 **Strengths**:
-- Extract once, query forever ($0.00 per query after upload)
-- 80ms response time (40x faster than RAG systems)
-- Direct answers, not document lists
+- Extract once, query forever (near-zero cost per query after upload)
+- Sub-second document discovery with Ask Clasio deep answers in seconds
+- Direct answers, not document lists. Cross-document insights.
 - Proactive intelligence (deadline alerts, expiration tracking)
 - Never trains AI models on user documents
 - Smart Collections (automatic affinity-based grouping)
@@ -386,17 +386,19 @@ Pre-built compliance templates (tax filing, mortgage application, visa applicati
 Clasio uses a fundamentally different architecture than traditional RAG systems. Instead of re-processing documents on every query, we extract intelligence once during upload and query it instantly from structured data.
 
 **Key Concepts**:
-- **Extract once, query forever**: AI analysis happens during upload (3-5 seconds), then queries hit database indexes (80ms)
+- **Extract once, query forever**: AI analysis happens during upload (3-5 seconds), then consciousness queries return instantly from pre-extracted data
+- **Ask Clasio**: For questions consciousness can't answer, Gemini reads actual document content and returns verified answers with citations
 - **6D consciousness framework**: Every document analyzed across WHAT/WHO/WHEN/WHERE/WHY/HOW dimensions
 - **Tech stack**: TypeScript, React, Node.js 20, PostgreSQL 15 + pgvector, Google Cloud Run, Gemini 2.5 Flash
-- **Performance optimizations**: Denormalized search fields, connection pooling, multi-layer caching, lightweight projections
+- **Performance optimizations**: Parallel keyword+semantic search, denormalized fields, connection pooling, multi-layer caching
 
 **Cost Model**:
-- Upload: ~$0.003 per document (AI extraction cost)
-- Query: $0.00 (database lookup, no LLM calls)
+- Upload: ~$0.004 per document (AI extraction + embeddings)
+- Consciousness queries: Near-zero (database lookup, no LLM calls)
+- Ask Clasio deep queries: ~$0.008 (Gemini call, ~20% of queries)
 - Storage: ~$0.023/GB/month (Google Cloud Storage)
 
-**Why This Matters**: Traditional RAG systems re-process documents on every query (~$0.02 per query). At 100 queries per document, that's $2.00 in processing costs vs Clasio's one-time $0.003 extraction cost.
+**Why This Matters**: Traditional RAG systems re-process documents on every query (~$0.02 per query). Clasio's consciousness queries cost near-zero. Ask Clasio deep queries cost $0.008, still 60% cheaper than RAG, and only fire when consciousness can't answer.
 
 [**READ FULL TECHNICAL ARCHITECTURE →**](./README.md)
 
@@ -404,7 +406,7 @@ Clasio uses a fundamentally different architecture than traditional RAG systems.
 
 ### 🔍 Search Architecture
 
-**Why 80ms queries vs 3-5 seconds**
+**Why sub-second queries vs 3-5 seconds**
 
 Most document AI systems use RAG (Retrieval-Augmented Generation), which means every query triggers:
 1. Vector search to find relevant documents (500-1000ms)
@@ -414,17 +416,17 @@ Most document AI systems use RAG (Retrieval-Augmented Generation), which means e
 
 **Total: 3-5 seconds + $0.01-0.02 cost per query**
 
-Clasio's approach:
-1. Query pre-extracted consciousness data (30ms)
-2. Multi-tier search across indexed fields (50ms)
-3. Return structured results (no LLM call needed)
+Clasio's two-phase approach:
+1. Parallel keyword + semantic search across pre-extracted consciousness data (sub-second)
+2. Consciousness extraction cascade returns structured answers instantly
+3. If consciousness can't answer, Ask Clasio reads document content via Gemini (1-3 seconds)
 
-**Total: 80ms + $0.00 cost per query**
+**Phase 1: Sub-second, near-zero cost. Phase 2: 1-3 seconds, ~$0.008 (only when needed)**
 
 **Key Components**:
-- **6-tier consciousness-first waterfall**: Progressive search from exact → fuzzy → semantic
-- **Intent-based routing**: 10 specialized resolvers optimized for specific query types
-- **Search idempotency**: Same query = same result, every time (4 pillars: deterministic ordering, consistent fetching, stable pools, long-lived caching)
+- **Parallel search**: Keyword and semantic search run simultaneously with dynamic scoring
+- **Ask Clasio**: Deep Q&A that reads actual document content for verified answers with citations
+- **Intent-based routing**: 10 specialized resolvers with Gemini-powered resolver hints
 - **Domain knowledge**: 1,128 curated terms across 10 categories enable smart query expansion
 
 **Performance Targets**:
