@@ -1,7 +1,7 @@
 # Clasio - Document Consciousness™
 
 [![License](https://img.shields.io/badge/license-Proprietary-red.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-4.3.2-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-5.1.0-blue.svg)](CHANGELOG.md)
 [![Status](https://img.shields.io/badge/status-Public%20Beta-green.svg)](https://clasio.ai)
 ![Repo Views](https://komarev.com/ghpvc/?username=gitjiggy&repo=Clasio-docs&label=Repo%20Views&color=0e75b6&style=flat)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
@@ -48,8 +48,10 @@ You spend 12 hours per week on document chaos:
 **Clasio** (Document Consciousness):
 - Extract intelligence once, query forever
 - Answers from inside your documents, insights across them
-- Sub-second document discovery, deep answers in seconds
+- Parallel search with deep answers in seconds
 - 100% accuracy on extracted data, verified Gemini answers when consciousness falls short
+- Upload entire folders with structure preserved
+- Link multiple email accounts to one document library
 
 ---
 
@@ -90,7 +92,13 @@ No rigid schemas. Extract ANY labeled field from ANY document type:
 ### 5. Ask Clasio (Deep Document Q&A)
 When consciousness extraction alone can't produce a confident answer, Ask Clasio sends document content directly to Gemini for a verified answer. It fires automatically as progressive enhancement in search results, and is also available as "Ask This Document" inside any document's detail view. Supports cross-document queries (e.g. "compare 2024 vs 2023 taxes") by including content from multiple related documents in a single Gemini call.
 
-### 6. Domain-Aware Search
+### 6. Folder Upload with Structure Preservation
+Upload entire folders from your computer. Your folder hierarchy is preserved exactly as you have it, no matter how many levels deep. Every document is analyzed while respecting your existing organization. No competitor combines folder structure preservation with AI document intelligence.
+
+### 7. Multi-Email Account Linking
+Link multiple Google accounts to one Clasio identity. Sign in with any linked email and see your complete document library. Documents from all linked accounts appear in a single, unified view. No account switching, no separate libraries.
+
+### 8. Domain-Aware Search
 Understands document categories:
 - Tax forms (1040, 1099, W-2, Schedule A)
 - Medical records (prescriptions, lab results, imaging)
@@ -131,7 +139,7 @@ Documents that tell you what matters:
 - **Connection Pool**: Optimized for Cloud Run (2-40 connections)
 
 ### AI & Intelligence
-- **Primary Model**: Google Gemini 2.5 Flash-lite (Paid Tier 1)
+- **Primary Model**: Google Gemini 2.5 Flash (Paid Tier 3, 30K RPM, 30M TPM)
 - **Extraction**: Multi-dimensional consciousness analysis (6D framework)
 - **Embeddings**: 768-dimensional vectors for semantic search
 - **Domain Knowledge**: 1,128 curated terms across 10 categories
@@ -232,16 +240,17 @@ Same query = same result. Every time. Four pillars:
 - WebP
 - HEIC/HEIF (Apple)
 
-**Limits**: During Beta only. Please contact support@clasio.ai if you need additional size/storage abilities
-- **File size**: 15MB per file
-- **Storage**: 1GB per user (beta tier)
-- **Document count**: 200 documents per user (beta tier)
+**Limits**: During Beta only. Please contact support@clasio.ai if you need additional capacity.
+- **File size**: 100MB per file
+- **Storage**: 25GB per user
+- **Document count**: 5,000 documents per user
+- **Batch upload**: 5,000 files per batch, or entire folders with structure preserved
 
 ---
 
 ## How It Works
 
-### 1. Upload up to 25 files at a time (One-time, 3-5 seconds)
+### 1. Upload files or folders (One-time, 3-5 seconds per document)
 ```
 User uploads document
     ↓

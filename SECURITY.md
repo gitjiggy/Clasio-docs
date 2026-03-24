@@ -172,7 +172,7 @@ We don't just follow security best practices. We assume every component could fa
 ### File Upload Validation
 
 **Size Limits**
-- Maximum file size: 15MB per document (please contact support@clasio.ai if you need increased file size limits)
+- Maximum file size: 100MB per document
 - Hard limit enforced at upload time
 - Prevents resource exhaustion attacks
 - Quota-aware upload processing
@@ -192,9 +192,9 @@ We don't just follow security best practices. We assume every component could fa
 ### Quota Management
 
 **Resource Limits (Beta Tier)**
-- Please contact support@clasio.ai if you need increased file size limits
-- Storage: 1GB per user
-- Documents: 200 per user
+- Storage: 25GB per user
+- Documents: 5,000 per user
+- File size: 100MB per document
 - Upload rate limiting
 - API request throttling
 

@@ -7,6 +7,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [5.1.0] - 2026-03-24
+
+### Added
+- **Folder upload with structure preservation**: Upload entire folders from your computer. Folder hierarchy preserved at any depth. Documents assigned to matching Clasio folders. "Your folder" badge distinguishes user folders from AI-created ones.
+- **Multi-email account linking**: Link multiple Google accounts to one Clasio identity. Sign in with any linked email, see the full document library. Data migration on link. Unlink with clear data retention warnings.
+- **Batch upload limit raised to 5,000**: Removed the 200-file per-batch limit. Upload thousands of files in one session. Per-document validation ensures one bad file doesn't block the rest.
+- **Per-document validation**: If one file in a batch fails validation, only that file is skipped. The rest proceed normally.
+- **Split upload button**: "Choose Files" (direct click) or "Choose Folder" (dropdown). Mobile browsers get the direct file picker (no dropdown).
+- **File size limit raised to 100MB**: Zod schema aligned with actual file validation limit.
+
+### Changed
+- AI analysis no longer overwrites user folder assignments. Documents placed in user-created folders stay there.
+- CollectionsView renders documents directly inside parent folders (not just sub-folders).
+- Upload modal no longer shows "Maximum files per upload" count.
+- .DS_Store and hidden files automatically filtered from folder uploads.
+
+---
+
+## [5.0.0] - 2026-03-22
+
+### Added
+- **V5.0 Parallel Search + Ask Clasio**: Complete search architecture overhaul replacing 6-tier waterfall with parallel keyword + semantic search.
+- **Ask Clasio deep document Q&A**: Direct Gemini content calls when consciousness confidence < 50%. Verified answers sourced from actual document content.
+- **Gemini preprocessor**: Typo correction with automatic retry on zero results.
+- **pg_trgm + trigram indexes**: Fuzzy matching for search queries.
+- **Async Organize button**: Organization enqueued to AI queue instead of blocking.
+
+### Changed
+- Search resolvers run in parallel instead of sequential waterfall.
+- Page title updated to "Answers from inside your documents, insights across them".
+- Removed dollar values from all customer-facing search explanations.
+- Upgraded to Gemini Paid Tier 3 (30,000 RPM, 30M TPM).
+
+---
+
 ## [4.3.1] - 2025-11-24
 
 ### Added

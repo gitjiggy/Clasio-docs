@@ -2,8 +2,8 @@
 
 > The intelligence your documents have. The capabilities other platforms don't.
 
-**Last Updated**: November 2025
-**Version**: 4.3.1
+**Last Updated**: March 2026
+**Version**: 5.1.0
 
 ---
 
@@ -360,8 +360,8 @@ Pre-built compliance templates (tax filing, mortgage application, visa applicati
 - Quantitative and timeline queries
 
 **Limitations**:
-- Beta limits (15MB per file, 200 documents, 1GB storage)
-- No teams/sharing features yet
+- Beta limits (100MB per file, 5,000 documents, 25GB storage)
+- No teams/sharing features yet (multi-email account linking available)
 - PWA only (no native mobile apps yet)
 - Smaller user base and ecosystem
 
@@ -499,6 +499,6 @@ Ready to transform your documents from passive files into intelligent knowledge?
 
 ---
 
-**© 2025 Clasio. All rights reserved.**
+**© 2026 Clasio. All rights reserved.**
 
-*This documentation reflects Clasio v4.3.1 as of November 2025. Features and capabilities evolve rapidly based on user feedback.*
+*This documentation reflects Clasio v5.1.0 as of March 2026. Features and capabilities evolve rapidly based on user feedback.*
